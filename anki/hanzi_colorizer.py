@@ -82,7 +82,7 @@ from anki.hooks import addHook
 from aqt import mw
 from aqt.utils import showInfo, askUser
 from aqt.qt import *
-from kanjicolorizer.colorizer import (KanjiVG, KanjiColorizer,
+from hanzicolorizer.colorizer import (KanjiVG, KanjiColorizer,
                                       InvalidCharacterError)
 import string
 
