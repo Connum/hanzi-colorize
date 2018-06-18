@@ -86,13 +86,16 @@ from hanzicolorizer.colorizer import (KanjiVG, KanjiColorizer,
                                       InvalidCharacterError)
 import string
 
-srcField = 'Hanzi'
-dstField = 'Diagram'
+srcField = ['Hanzi', 'Word (in Kanji/Hanzi)']
+dstField = ['Diagram', 'Stroke Order Diagram 1']
 
 kc = KanjiColorizer(config)
 
 
 def modelIsCorrectType(model):
+    global srcField
+    global dstField
+    
     '''
     Returns True if model has Chinese or Mandarin in the name and has both srcField
     and dstField; otherwise returns False
@@ -100,9 +103,31 @@ def modelIsCorrectType(model):
     # Does the model name have Chinese or Mandarin in it?
     model_name = model['name'].lower()
     fields = mw.col.models.fieldNames(model)
+
+    hasValidSrcField = False
+    hasValidDstField = False
+
+    if isinstance(srcField, list):
+        for f in srcField:
+            if f in fields:
+                hasValidSrcField = True
+                srcField = f
+                break
+    else:
+        hasValidSrcField = srcField in fields
+
+    if isinstance(dstField, list):
+        for f in dstField:
+            if f in fields:
+                hasValidDstField = True
+                dstField = f
+                break
+    else:
+        hasValidDstField = dstField in fields
+
     return (('chinese' in model_name or 'mandarin' in model_name) and
-                         srcField in fields and
-                         dstField in fields)
+                         hasValidSrcField and
+                         hasValidDstField)
 
 
 def characters_to_colorize(s):
