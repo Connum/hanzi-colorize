@@ -58,19 +58,19 @@ def colorize(character, mode="spectrum", saturation=0.95, value=0.75,
 # Setup
 
 source_directory = os.path.join(os.path.dirname(__file__),
-                                'data', 'kanjivg', 'kanji')
+                                'data', 'hanzivg', 'hanzi')
 
 
 # Classes
 
 class KanjiVG(object):
     '''
-    Class to create kanji objects containing KanjiVG data and some more
+    Class to create hanzi objects containing HanziVG data and some more
     basic qualities of the character
     '''
     def __init__(self, character, variant=''):
         u'''
-        Create a new KanjiVG object
+        Create a new HanziVG object
 
         Either give just the character
 
@@ -115,7 +115,7 @@ class KanjiVG(object):
     @classmethod
     def _create_from_filename(cls, filename):
         u'''
-        Alternate constructor that uses a KanjiVG filename; used by
+        Alternate constructor that uses a HanziVG filename; used by
         get_all().
 
         >>> k = KanjiVG._create_from_filename('00061.svg')
@@ -128,7 +128,7 @@ class KanjiVG(object):
     @property
     def ascii_filename(self):
         u'''
-        An SVG filename in ASCII using the same format KanjiVG uses.
+        An SVG filename in ASCII using the same format HanziVG uses.
 
         >>> k = KanjiVG(u'漢')
         >>> k.ascii_filename
@@ -136,7 +136,7 @@ class KanjiVG(object):
 
         May raise InvalidCharacterError for some kinds of invalid
         character/variant combinations; this should only happen during
-        KanjiVG object initialization.
+        HanziVG object initialization.
         '''
         try:
             code = '%05x' % ord(self.character)
@@ -179,7 +179,7 @@ class KanjiVG(object):
 
 class KanjiColorizer:
     u"""
-    Class that creates colored stroke order diagrams out of kanjivg
+    Class that creates colored stroke order diagrams out of hanzivg
     data, and writes them to file.
 
     Initialize with no arguments to take the command line settings, or
@@ -238,21 +238,21 @@ class KanjiColorizer:
         self._parser.add_argument('--mode', default='spectrum',
                     choices=['spectrum', 'contrast'],
                     help='spectrum: color progresses evenly through the'
-                        ' spectrum; nice for seeing the way the kanji is'
+                        ' spectrum; nice for seeing the way the hanzi is'
                         ' put together at a glance, but has the disadvantage'
                         ' of using similar colors for consecutive strokes '
                         'which can make it less clear which number goes '
                         'with which stroke.  contrast: maximizes contrast '
                         'among any group of consecutive strokes, using the '
                         'golden ratio; also provides consistency by using '
-                        'the same sequence for every kanji.  (default: '
+                        'the same sequence for every hanzi.  (default: '
                         '%(default)s)')
         self._parser.add_argument('--saturation', default=0.95, type=float,
                     help='a decimal indicating saturation where 0 is '
                         'white/gray/black and 1 is completely  colorful '
                         '(default: %(default)s)')
         self._parser.add_argument('--group-mode', action='store_true',
-                    help='Color kanji groups instead of stroke by stroke '
+                    help='Color hanzi groups instead of stroke by stroke '
                         '(default: %(default)s)')
         self._parser.add_argument('--value', default=0.75, type=float,
                     help='a decimal indicating value where 0 is black '
@@ -275,7 +275,7 @@ class KanjiColorizer:
                         'as the code.  '
                         '(default: %(default)s)')
         self._parser.add_argument('-o', '--output-directory',
-                    default='colorized-kanji')
+                    default='colorized-hanzi')
 
     # Public methods
 
@@ -557,8 +557,8 @@ class KanjiColorizer:
         >>> kc._comment_copyright(svg).count('contrast')
         0
         """
-        note = """This file has been modified from the original version by the kanji_colorize.py
-script (available at http://github.com/cayennes/kanji-colorize) with these
+        note = """This file has been modified from the original version by the hanzi_colorize.py
+script (available at http://github.com/Connum/hanzi-colorize) with these
 settings:
     mode: """ + self.settings.mode + """
     saturation: """ + str(self.settings.saturation) + """

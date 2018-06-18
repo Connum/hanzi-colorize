@@ -1,12 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-# kanji_colorizer.py is part of kanji-colorize which makes KanjiVG data
+# hanzi_colorizer.py is part of hanzi-colorize which makes HanziVG data
 # into colored stroke order diagrams; this is the anki2 addon file.
 #
-# Copyright 2012 Cayenne Boyer
+# Copyright 2018 hanzi-colorize repository contributors
+# based on kanji-colorize, Copyright 2012 Cayenne Boyer
 #
-# The code to do this automatically when the Kanji field is exited was
+# The code to do this automatically when the Hanzi field is exited was
 # originally based on the Japanese support reading generation addon by
 # Damien Elmes
 #
@@ -24,17 +25,17 @@
 # License along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-# Installation: copy this file and the kanjicolorizer directory to your
+# Installation: copy this file and the hanzicolorizer directory to your
 # Anki addons folder.
 
-# Usage: Add a "Diagram" field to a model with "Japanese"
-# in the name and a field named "Kanji".  When you finish editing the
-# kanji field, if it contains precisely one character, a colored stroke
+# Usage: Add a "Diagram" field to a model with "Chinese" or "Mandarin"
+# in the name and a field named "Hanzi".  When you finish editing the
+# hanzi field, if it contains precisely one character, a colored stroke
 # order diagram will be added to the Diagram field in the same way that
 # the Japanese support plugin adds readings.
 #
 # To add diagrams to all such fields, or regenerate them with new
-# settings, use the "Kanji Colorizer: (re)generate all" option in the
+# settings, use the "Hanzi Colorizer: (re)generate all" option in the
 # tools menu.
 
 # CONFIGURATION
@@ -45,13 +46,13 @@
 # MODE
 config = "--mode "
 # spectrum: color progresses evenly through the spectrum; nice for
-#           seeing the way the kanji is put together at a glance, but
+#           seeing the way the hanzi is put together at a glance, but
 #           has the disadvantage of using similar colors for consecutive
 #           strokes which can make it less clear which number goes with
 #           which number goes with which stroke.
 # contrast: maximizes the contrast among any group of consecutive
 #           strokes, using the golden ratio; also provides consistency
-#           by using the same sequence for every kanji
+#           by using the same sequence for every hanzi
 config += "spectrum"
 
 # uncomment this line to color whole groups instead of strokes
@@ -85,7 +86,7 @@ from kanjicolorizer.colorizer import (KanjiVG, KanjiColorizer,
                                       InvalidCharacterError)
 import string
 
-srcField = 'Kanji'
+srcField = 'Hanzi'
 dstField = 'Diagram'
 
 kc = KanjiColorizer(config)
@@ -93,13 +94,13 @@ kc = KanjiColorizer(config)
 
 def modelIsCorrectType(model):
     '''
-    Returns True if model has Japanese in the name and has both srcField
+    Returns True if model has Chinese or Mandarin in the name and has both srcField
     and dstField; otherwise returns False
     '''
-    # Does the model name have Japanese in it?
+    # Does the model name have Chinese or Mandarin in it?
     model_name = model['name'].lower()
     fields = mw.col.models.fieldNames(model)
-    return ('japanese' in model_name and
+    return (('chinese' in model_name or 'mandarin' in model_name) and
                          srcField in fields and
                          dstField in fields)
 
@@ -110,7 +111,7 @@ def characters_to_colorize(s):
 
     If the string consists of only a single character, returns a list
     containing that character.  If it is longer, returns a list of  only the
-    kanji.
+    hanzi.
 
     '''
     if len(s) <= 1:
@@ -120,7 +121,7 @@ def characters_to_colorize(s):
 
 def addKanji(note, flag=False, currentFieldIndex=None):
     '''
-    Checks to see if a kanji should be added, and adds it if so.
+    Checks to see if a hanzi should be added, and adds it if so.
     '''
     if not modelIsCorrectType(note.model()):
         return flag
@@ -154,7 +155,7 @@ def addKanji(note, flag=False, currentFieldIndex=None):
     return flag
 
 
-# Add a colorized kanji to a Diagram whenever leaving a Kanji field
+# Add a colorized hanzi to a Diagram whenever leaving a Hanzi field
 
 def onFocusLost(flag, note, currentFieldIndex):
     return addKanji(note, flag, currentFieldIndex)
@@ -167,18 +168,18 @@ addHook('editFocusLost', onFocusLost)
 def regenerate_all():
     # Find the models that have the right name and fields; faster than
     # checking every note
-    if not askUser("Do you want to regenerate all kanji diagrams? "
+    if not askUser("Do you want to regenerate all hanzi diagrams? "
                    'This may take some time and will overwrite the '
                    'destination Diagram fields.'):
         return
     models = [m for m in mw.col.models.all() if modelIsCorrectType(m)]
-    # Find the notes in those models and give them kanji
+    # Find the notes in those models and give them hanzi
     for model in models:
         for nid in mw.col.models.nids(model):
             addKanji(mw.col.getNote(nid))
-    showInfo("Done regenerating colorized kanji diagrams!")
+    showInfo("Done regenerating colorized hanzi diagrams!")
 
 # add menu item
-do_regenerate_all = QAction("Kanji Colorizer: (re)generate all", mw)
+do_regenerate_all = QAction("Hanzi Colorizer: (re)generate all", mw)
 mw.connect(do_regenerate_all, SIGNAL("triggered()"), regenerate_all)
 mw.form.menuTools.addAction(do_regenerate_all)

@@ -1,10 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-# setup.py is part of kanji-colorize which makes KanjiVG data into
+# pavement.py is part of hanzi-colorize which makes Hanzi data into
 # colored stroke order diagrams
 #
-# Copyright 2012 Cayenne Boyer
+# Copyright 2018 hanzi-colorize repository contributors
+# based on kanji-colorize, Copyright 2012 Cayenne Boyer
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -28,21 +29,21 @@ import zipfile
 options(
     anki=Bunch(
         builddir=path('build') / 'anki_addon',
-        zip=path('dist') / 'KanjiColorizerAnkiAddon.zip'))
+        zip=path('dist') / 'HanziColorizerAnkiAddon.zip'))
 
 
 setup(
-    name='KanjiColorizer',
+    name='HanziColorizer',
     description='script and module to create colored stroke order '
-        'diagrams based on KanjiVG data',
+        'diagrams based on HanziVG data',
     long_description=open('README.rst').read(),
     version='0.11dev',
     author='Cayenne',
-    author_email='cayennes@gmail.com',
-    url='http://github.com/cayennes/kanji-colorize',
-    packages=['kanjicolorizer'],
-    scripts=['kanji_colorize.py'],
-    package_data={'kanjicolorizer': ['data/kanjivg/kanji/*.svg']},
+    author_email='connum+github@gmail.com',
+    url='http://github.com/Connum/hanzi-colorize',
+    packages=['hanzicolorizer'],
+    scripts=['hanzi_colorize.py'],
+    package_data={'hanzicolorizer': ['data/hanzivg/hanzi/*.svg']},
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
@@ -79,16 +80,16 @@ def build_anki_addon(options):
     options.anki.builddir.makedirs()
 
     # add addon files
-    (path('anki') / 'kanji_colorizer.py').copy(options.anki.builddir)
-    lib_path = path('build') / 'lib' / 'kanjicolorizer'
-    lib_path.copytree(options.anki.builddir / 'kanjicolorizer')
+    (path('anki') / 'hanzi_colorizer.py').copy(options.anki.builddir)
+    lib_path = path('build') / 'lib' / 'hanzicolorizer'
+    lib_path.copytree(options.anki.builddir / 'hanzicolorizer')
 
     # add required modules, minus the c in .pyc to get .py files
     path(argparse.__file__[:-1]).copy(options.anki.builddir)
     path(colorsys.__file__[:-1]).copy(options.anki.builddir)
 
     # add licenses
-    license_dest = options.anki.builddir / 'kanjicolorizer' / 'licenses'
+    license_dest = options.anki.builddir / 'hanzicolorizer' / 'licenses'
     path('licenses').copytree(license_dest)
 
 
