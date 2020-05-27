@@ -35,10 +35,10 @@ Feedback
 --------
 
 If there's anything you think would improve the Anki addon, you can use the
-`issue tracker <https://github.com/Connum/hanzi-colorize/issues>`_
+`issue tracker <https://github.com/Connum/hanzi-colorize/issues>`_ .
 
 If you find an error in the stroke order data, please use the 
-`HanziVG issue tracker <https://github.com/Connum/hanzivg/issues/`_.
+`HanziVG issue tracker <https://github.com/Connum/hanzivg/issues/>`_ .
 
 Development
 -----------
