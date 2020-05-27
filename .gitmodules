@@ -1,0 +1,3 @@
+[submodule "hanjicolorizer/data/hanzivg"]
+	path = hanjicolorizer/data/hanzivg
+	url = https://github.com/Connum/hanzivg

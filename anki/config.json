@@ -1,0 +1,8 @@
+{"mode": "spectrum",
+ "saturation": 0.95,
+ "value": 0.75,
+ "image-size": 327,
+ "group-mode": false,
+ "model":["chinese", "mandarin","hanzi"],
+ "src-field":["Hanzi", "Character", "Word (in Kanji/Hanzi)", "Word (in Hanzi)"],
+ "dst-field":["Diagram", "Stroke Order", "Stroke Order Diagram 1", "Stroke order diagram (if you'd like to test stroke order)", "Stroke Order Diagram 1 (And component parts/mnemonics for meaning)"]}

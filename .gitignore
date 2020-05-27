@@ -1,0 +1,17 @@
+*.zip
+*.pyc
+kanji-colorize-*
+kanjivg
+kanji
+/build
+/dist
+MANIFEST
+setup.py
+venv
+
+!/test/kanjivg
+!/test/kanjivg/kanji
+!/test/default_results/kanji-colorize-contrast
+!/test/default_results/kanji-colorize-spectrum
+!/kanjicolorizer/data/kanjivg
+!/hanzicolorizer/data/hanzivg

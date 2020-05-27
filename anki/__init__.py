@@ -1,0 +1,1 @@
+from . import hanzi_colorizer
