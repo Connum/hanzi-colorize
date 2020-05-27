@@ -1,0 +1,1 @@
+paver dist_anki_addon
