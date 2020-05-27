@@ -38,7 +38,7 @@ setup(
         'diagrams based on HanziVG data',
     long_description=open('README.rst').read(),
     version='0.12',
-    author='Connum',
+    author='Cayenne',
     author_email='connum+github@gmail.com',
     url='http://github.com/Connum/hanzi-colorize',
     packages=['hanzicolorizer'],
@@ -80,16 +80,22 @@ def build_anki_addon(options):
     options.anki.builddir.makedirs()
 
     # add addon files
-    (path('anki') / '__init__.py').copy(options.anki.builddir)
+<<<<<<< HEAD
     (path('anki') / 'hanzi_colorizer.py').copy(options.anki.builddir)
-    (path('anki') / 'config.md').copy(options.anki.builddir)
-    (path('anki') / 'config.json').copy(options.anki.builddir)
     lib_path = path('build') / 'lib' / 'hanzicolorizer'
     lib_path.copytree(options.anki.builddir / 'hanzicolorizer')
+=======
+    (path('anki') / '__init__.py').copy(options.anki.builddir)
+    (path('anki') / 'kanji_colorizer.py').copy(options.anki.builddir)
+    (path('anki') / 'config.md').copy(options.anki.builddir)
+    (path('anki') / 'config.json').copy(options.anki.builddir)
+    lib_path = path('build') / 'lib' / 'kanjicolorizer'
+    lib_path.copytree(options.anki.builddir / 'kanjicolorizer')
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e
 
     # add required modules
-    path(argparse.__file__).copy(options.anki.builddir / 'hanzicolorizer')
-    path(colorsys.__file__).copy(options.anki.builddir / 'hanzicolorizer')
+    path(argparse.__file__).copy(options.anki.builddir / 'kanjicolorizer')
+    path(colorsys.__file__).copy(options.anki.builddir / 'kanjicolorizer')
 
     # add licenses
     license_dest = options.anki.builddir / 'hanzicolorizer' / 'licenses'

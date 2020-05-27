@@ -77,8 +77,13 @@ class KanjiVG(object):
     basic qualities of the character
     '''
     def __init__(self, character, variant=''):
-        '''
+<<<<<<< HEAD:hanzicolorizer/colorizer.py
+        u'''
         Create a new HanziVG object
+=======
+        '''
+        Create a new KanjiVG object
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:kanjicolorizer/colorizer.py
 
         Either give just the character
 
@@ -122,8 +127,13 @@ class KanjiVG(object):
 
     @classmethod
     def _create_from_filename(cls, filename):
-        '''
+<<<<<<< HEAD:hanzicolorizer/colorizer.py
+        u'''
         Alternate constructor that uses a HanziVG filename; used by
+=======
+        '''
+        Alternate constructor that uses a KanjiVG filename; used by
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:kanjicolorizer/colorizer.py
         get_all().
 
         >>> k = KanjiVG._create_from_filename('00061.svg')
@@ -135,8 +145,13 @@ class KanjiVG(object):
 
     @property
     def ascii_filename(self):
-        '''
+<<<<<<< HEAD:hanzicolorizer/colorizer.py
+        u'''
         An SVG filename in ASCII using the same format HanziVG uses.
+=======
+        '''
+        An SVG filename in ASCII using the same format KanjiVG uses.
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:kanjicolorizer/colorizer.py
 
         >>> k = KanjiVG('漢')
         >>> k.ascii_filename
@@ -186,8 +201,13 @@ class KanjiVG(object):
 
 
 class KanjiColorizer:
-    """
+<<<<<<< HEAD:hanzicolorizer/colorizer.py
+    u"""
     Class that creates colored stroke order diagrams out of hanzivg
+=======
+    """
+    Class that creates colored stroke order diagrams out of kanjivg
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:kanjicolorizer/colorizer.py
     data, and writes them to file.
 
     Initialize with no arguments to take the command line settings, or

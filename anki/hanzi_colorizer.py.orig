@@ -43,7 +43,7 @@ from anki.hooks import addHook
 from aqt import mw
 from aqt.utils import showInfo, askUser
 from aqt.qt import *
-from .hanzicolorizer.colorizer import (KanjiVG, KanjiColorizer,
+from .kanjicolorizer.colorizer import (KanjiVG, KanjiColorizer,
                                       InvalidCharacterError)
 
 # Configuration
@@ -51,9 +51,26 @@ from .hanzicolorizer.colorizer import (KanjiVG, KanjiColorizer,
 addon_config = mw.addonManager.getConfig(__name__)
 
 config = "--mode "
+<<<<<<< HEAD:anki/hanzi_colorizer.py
+# spectrum: color progresses evenly through the spectrum; nice for
+#           seeing the way the hanzi is put together at a glance, but
+#           has the disadvantage of using similar colors for consecutive
+#           strokes which can make it less clear which number goes with
+#           which number goes with which stroke.
+# contrast: maximizes the contrast among any group of consecutive
+#           strokes, using the golden ratio; also provides consistency
+#           by using the same sequence for every hanzi
+config += "spectrum"
+
+# uncomment this line to color whole groups instead of strokes
+#config += " --group-mode "
+
+# SATURATION
+=======
 config += addon_config["mode"]
 if addon_config["group-mode"]:
   config += " --group-mode "
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:anki/kanji_colorizer.py
 config += " --saturation "
 config += str(addon_config["saturation"])
 config += " --value "
@@ -61,29 +78,35 @@ config += str(addon_config["value"])
 config += " --image-size "
 config += str(addon_config["image-size"])
 
-modelNameSubstring = ['chinese','mandarin']
+<<<<<<< HEAD:anki/hanzi_colorizer.py
+from anki.hooks import addHook
+from aqt import mw
+from aqt.utils import showInfo, askUser
+from aqt.qt import *
+from hanzicolorizer.colorizer import (KanjiVG, KanjiColorizer,
+                                      InvalidCharacterError)
+import string
+
 srcField = ['Hanzi', 'Word (in Kanji/Hanzi)']
 dstField = ['Diagram', 'Stroke Order Diagram 1']
+=======
+modelNameSubstring = 'japanese'
+srcField           = 'Kanji'
+dstField           = 'Diagram'
 
 # avoid errors due to invalid config
 if 'model' in addon_config and type(addon_config['model']) is str:
-    modelNameSubstring = [addon_config['model'].lower()]
-if 'model' in addon_config and isinstance(addon_config['model']), list):
-    modelNameSubstring = addon_config['model']
+    modelNameSubstring = addon_config['model'].lower()
 if 'src-field' in addon_config and type(addon_config['src-field']) is str:
-    srcField = [addon_config['src-field']]
-if 'src-field' in addon_config and isinstance(addon_config['src-field'], list):
     srcField = addon_config['src-field']
 if 'dst-field' in addon_config and type(addon_config['dst-field']) is str:
-    dstField = [addon_config['dst-field']]
-if 'dst-field' in addon_config and isinstance(addon_config['dst-field'], list):
     dstField = addon_config['dst-field']
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:anki/kanji_colorizer.py
 
 kc = KanjiColorizer(config)
 
 
 def modelIsCorrectType(model):
-    global modelNameSubstring
     global srcField
     global dstField
     
@@ -94,19 +117,10 @@ def modelIsCorrectType(model):
     # Does the model name have Chinese or Mandarin in it?
     model_name = model['name'].lower()
     fields = mw.col.models.fieldNames(model)
+<<<<<<< HEAD:anki/hanzi_colorizer.py
 
-	isValidModel = False
     hasValidSrcField = False
     hasValidDstField = False
-	
-    if isinstance(modelNameSubstring, list):
-        for f in modelNameSubstring:
-            if f in model_name:
-                isValidModel = True
-                modelNameSubstring = f
-                break
-    else:
-        hasValidSrcField = modelNameSubstring in model_name
 
     if isinstance(srcField, list):
         for f in srcField:
@@ -126,9 +140,14 @@ def modelIsCorrectType(model):
     else:
         hasValidDstField = dstField in fields
 
-    return ('chinese' in model_name or 'mandarin' in model_name) and
+    return (('chinese' in model_name or 'mandarin' in model_name) and
                          hasValidSrcField and
                          hasValidDstField)
+=======
+    return (modelNameSubstring in model_name and
+                         srcField in fields and
+                         dstField in fields)
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:anki/kanji_colorizer.py
 
 
 def characters_to_colorize(s):
@@ -206,6 +225,11 @@ def regenerate_all():
     showInfo("Done regenerating colorized hanzi diagrams!")
 
 # add menu item
+<<<<<<< HEAD:anki/hanzi_colorizer.py
 do_regenerate_all = QAction("Hanzi Colorizer: (re)generate all", mw)
+mw.connect(do_regenerate_all, SIGNAL("triggered()"), regenerate_all)
+=======
+do_regenerate_all = QAction("Kanji Colorizer: (re)generate all", mw)
 do_regenerate_all.triggered.connect(regenerate_all)
+>>>>>>> 86aba638872fbc5506310beaab4c5a6b9ab31e5e:anki/kanji_colorizer.py
 mw.form.menuTools.addAction(do_regenerate_all)
