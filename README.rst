@@ -24,6 +24,10 @@ Using with Anki
 There is an addon for Anki2 coming soon.
 Meanwhile, read the "Development" section below.
 
+The addon aims to be compatible with the note types made available with the "Fluent Forever" language learning method.
+If there are multiple stroke order fields in a note type (e.g. the "All Purpose Chinese/Japanese Card"), only the first
+field is getting populated with all the stroke order diagrams. You'll have to cut/paste them to their respective fields.
+
 Downloading and Running the Software
 ------------------------------------
 
