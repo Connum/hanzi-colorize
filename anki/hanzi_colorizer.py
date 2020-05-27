@@ -61,14 +61,14 @@ config += str(addon_config["value"])
 config += " --image-size "
 config += str(addon_config["image-size"])
 
-modelNameSubstring = ['chinese','mandarin']
-srcField = ['Hanzi', 'Word (in Kanji/Hanzi)']
-dstField = ['Diagram', 'Stroke Order Diagram 1']
+modelNameSubstring = ['chinese','mandarin','hanzi']
+srcField = ['Hanzi', 'Word (in Kanji/Hanzi)', 'Word (in Hanzi)']
+dstField = ['Diagram', 'Stroke Order Diagram 1', 'Stroke order diagram (if you\'d like to test stroke order)', 'Stroke Order Diagram 1 (And component parts/mnemonics for meaning)']
 
 # avoid errors due to invalid config
 if 'model' in addon_config and type(addon_config['model']) is str:
     modelNameSubstring = [addon_config['model'].lower()]
-if 'model' in addon_config and isinstance(addon_config['model']), list):
+if 'model' in addon_config and isinstance(addon_config['model'], list):
     modelNameSubstring = addon_config['model']
 if 'src-field' in addon_config and type(addon_config['src-field']) is str:
     srcField = [addon_config['src-field']]
@@ -95,15 +95,14 @@ def modelIsCorrectType(model):
     model_name = model['name'].lower()
     fields = mw.col.models.fieldNames(model)
 
-	isValidModel = False
+    isValidModel = False
     hasValidSrcField = False
     hasValidDstField = False
-	
+    
     if isinstance(modelNameSubstring, list):
         for f in modelNameSubstring:
-            if f in model_name:
+            if f.lower() in model_name:
                 isValidModel = True
-                modelNameSubstring = f
                 break
     else:
         hasValidSrcField = modelNameSubstring in model_name
@@ -112,7 +111,6 @@ def modelIsCorrectType(model):
         for f in srcField:
             if f in fields:
                 hasValidSrcField = True
-                srcField = f
                 break
     else:
         hasValidSrcField = srcField in fields
@@ -121,19 +119,16 @@ def modelIsCorrectType(model):
         for f in dstField:
             if f in fields:
                 hasValidDstField = True
-                dstField = f
                 break
     else:
         hasValidDstField = dstField in fields
 
-    return ('chinese' in model_name or 'mandarin' in model_name) and
-                         hasValidSrcField and
-                         hasValidDstField)
+    return (isValidModel and hasValidSrcField and hasValidDstField)
 
 
 def characters_to_colorize(s):
     '''
-    Given a string, returns a lost of characters to colorize
+    Given a string, returns a list of characters to colorize
 
     If the string consists of only a single character, returns a list
     containing that character.  If it is longer, returns a list of  only the
@@ -151,15 +146,35 @@ def addKanji(note, flag=False, currentFieldIndex=None):
     '''
     if not modelIsCorrectType(note.model()):
         return flag
+        
+    fields = mw.col.models.fieldNames(note.model())
+
+    if isinstance(srcField, list):
+        for f in srcField:
+            if f in fields:
+                hasValidSrcField = True
+                useSrcField = f
+                break
+    else:
+        useSrcField = srcField
+
+    if isinstance(dstField, list):
+        for f in dstField:
+            if f in fields:
+                hasValidDstField = True
+                useDstField = f
+                break
+    else:
+        useDstField = dstField
 
     if currentFieldIndex != None: # We've left a field
         # But it isn't the relevant one
-        if note.model()['flds'][currentFieldIndex]['name'] != srcField:
+        if note.model()['flds'][currentFieldIndex]['name'] != useSrcField:
             return flag
 
-    srcTxt = mw.col.media.strip(note[srcField])
+    srcTxt = mw.col.media.strip(note[useSrcField])
 
-    oldDst = note[dstField]
+    oldDst = note[useDstField]
     dst=''
 
     for character in characters_to_colorize(str(srcTxt)):
@@ -174,7 +189,7 @@ def addKanji(note, flag=False, currentFieldIndex=None):
         dst += '<img src="{!s}">'.format(anki_fname)
 
     if dst != oldDst and dst != '':
-        note[dstField] = dst
+        note[useDstField] = dst
         note.flush()
         return True
 

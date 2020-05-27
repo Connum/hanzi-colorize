@@ -1,1 +1,1 @@
-from . import kanji_colorizer
+from . import hanzi_colorizer

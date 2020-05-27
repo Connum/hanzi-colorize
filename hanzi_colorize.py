@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
-# kanjicolorizer.py is part of kanji-colorize which makes KanjiVG data
+# kanji_colorize.py is part of hanzi-colorize which makes HanziVG data
 # into colored stroke order diagrams
 #
-# Copyright 2012 Cayenne Boyer
+# Copyright 2018 hanzi-colorize repository contributors
+# based on kanji-colorize, Copyright 2012 Cayenne Boyer
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -20,7 +21,7 @@
 # License along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-from kanjicolorizer.colorizer import KanjiColorizer
+from hanzicolorizer.colorizer import KanjiColorizer
 
 if __name__ == "__main__":
     kc = KanjiColorizer()
