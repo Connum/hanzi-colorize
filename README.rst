@@ -21,6 +21,8 @@ Also, the python tests are currently failing because I haven't adapted them from
 Using with Anki
 ---------------
 
+.. image:: hanzi-colorize-anki.png
+
 There is an addon for Anki2 coming soon.
 Meanwhile, read the "Development" section below.
 
